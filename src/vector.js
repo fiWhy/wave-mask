@@ -3,11 +3,11 @@ var namespaces = {
     xmlns: 'http://www.w3.org/2000/xmlns',
     xlink: 'http://www.w3.org/1999/xlink',
     xhtml: 'http://www.w3.org/1999/xhtml'
-}
+};
 
 var argumentsToArray = function (args, from) {
     return Array.prototype.slice.call(args, from);
-}
+};
 
 var appendChild = function (target, els) {
     els.forEach(function (el) {
@@ -17,7 +17,7 @@ var appendChild = function (target, els) {
             target.appendChild(el)
         }
     });
-}
+};
 
 var detectNamespace = function (attr) {
     var index = attr.indexOf(':');
@@ -38,8 +38,8 @@ var appendAttributes = function (el, attributes) {
 }
 
 var el = function (elName, attributes) {
-    var el = document.createElementNS(namespaces[detectNamespace(elName) || 'svg'], elName)
-    appendAttributes(el, attributes)
+    var el = document.createElementNS(namespaces[detectNamespace(elName) || 'svg'], elName);
+    appendAttributes(el, attributes);
     appendChild(el, argumentsToArray(arguments, 2));
     return el;
 }
@@ -70,7 +70,17 @@ var circle = function (svg, attributes, maskId) {
     return svg.appendChild(el('mask', {
         id: maskId
     }, circle))
-}
+};
+
+var polygon = function (svg, attributes, maskId) {
+    var polygon = el('polygon', {
+        points: "200,400 300,200 400,400",
+        fill: '#fff'
+    });
+    return svg.appendChild(el('mask', {
+        id: maskId
+    }, polygon))
+};
 
 var liveCircle = function (radius) {
     return function (svg, attributes, maskId) {
@@ -95,10 +105,11 @@ var liveCircle = function (radius) {
             id: maskId
         }, circle))
     }
-}
+};
 
 module.exports.el = el;
 module.exports.namespaces = namespaces;
 module.exports.circle = circle;
-module.exports.createImageSvg = createImageSvg
+module.exports.createImageSvg = createImageSvg;
 module.exports.liveCircle = liveCircle;
+module.exports.polygon = polygon;

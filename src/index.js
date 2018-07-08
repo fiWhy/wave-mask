@@ -4,7 +4,7 @@ var withMaskImages = document.getElementsByClassName('with-mask');
 Array.prototype.forEach.call(withMaskImages, function (el) {
     new Mask(el)
         .cover(
-            Vector.liveCircle(50)
+            Vector.polygon
         ).done(function (svg) {
             console.log(svg);
             var parent = el.parentElement;
